@@ -21,13 +21,10 @@ int main() {
     float ball_velocity_y = 0.0f;
     int paddle_A_points = 0;
     int paddle_B_points = 0;
-    const int POINTS_OFFSET = 150;
-    const int FONT_SIZE = 100;
-    int score_A_width = MeasureText(TextFormat("%d", paddle_A_points), FONT_SIZE);
-    int score_B_width = MeasureText(TextFormat("%d", paddle_B_points), FONT_SIZE);
-    int paddle_A_points_x = WIDTH / 2 - POINTS_OFFSET - score_A_width;
-    int paddle_B_points_x = WIDTH / 2 + POINTS_OFFSET - score_B_width;
+    const int PADDLE_A_POINTS_X = WIDTH / 3 - (WIDTH * 0.039);
+    const int PADDLE_B_POINTS_X = 2 * WIDTH / 3;
     const int PADDLE_POINTS_Y = 15;
+    const int FONT_SIZE = 100;
 
     SetConfigFlags(FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_HIGHDPI);
     InitWindow(WIDTH, HEIGHT, "PONG");
@@ -115,8 +112,8 @@ int main() {
         DrawRectangleRec(paddle_B_bot, FG_COLOR);
         DrawRectangleRec(ball, FG_COLOR);
         DrawRectangle((WIDTH / 2) - (HALFLINE_WIDTH / 2), 0, HALFLINE_WIDTH, HEIGHT, FG_COLOR);
-        DrawText(TextFormat("%d", paddle_A_points), paddle_A_points_x, PADDLE_POINTS_Y, FONT_SIZE, FG_COLOR);
-        DrawText(TextFormat("%d", paddle_B_points), paddle_B_points_x, PADDLE_POINTS_Y, FONT_SIZE, FG_COLOR);
+        DrawText(TextFormat("%d", paddle_A_points), PADDLE_A_POINTS_X, PADDLE_POINTS_Y, FONT_SIZE, FG_COLOR);
+        DrawText(TextFormat("%d", paddle_B_points), PADDLE_B_POINTS_X, PADDLE_POINTS_Y, FONT_SIZE, FG_COLOR);
         EndDrawing();
     };
     CloseWindow();

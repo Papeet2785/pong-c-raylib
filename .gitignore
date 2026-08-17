@@ -1,3 +1,4 @@
 .clangd
+*.sh
 *.out
 *.exe
