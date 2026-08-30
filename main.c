@@ -1,4 +1,4 @@
-#include <raylib.h>
+#include "include/raylib.h"
 
 #define BG_COLOR BLACK
 #define FG_COLOR WHITE
@@ -26,7 +26,6 @@ int main() {
     const int PADDLE_POINTS_Y = 15;
     const int FONT_SIZE = 100;
 
-    SetConfigFlags(FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_HIGHDPI);
     InitWindow(WIDTH, HEIGHT, "PONG");
     while(!WindowShouldClose()){
         float dt = GetFrameTime();
