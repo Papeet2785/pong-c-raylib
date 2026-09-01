@@ -38,12 +38,4 @@ Close the game using the window manager or the normal window-close action.
 The project requires:
 
 - C compiler (`clang` or `gcc`)
-- [raylib](https://www.raylib.com/)
-- `pkg-config`
 
-On NixOS, raylib can be installed through `nixpkgs`.
-
-For example, if raylib is already installed through your NixOS configuration, verify it with:
-
-```bash
-nix eval --raw nixpkgs#raylib
