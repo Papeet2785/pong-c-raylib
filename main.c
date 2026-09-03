@@ -27,9 +27,6 @@ int main() {
     const int BALL_VELOCITY_Y_LIMIT = 800;
     int paddle_A_points = 0;
     int paddle_B_points = 0;
-    const int PADDLE_A_POINTS_X = WIDTH / 3 - (WIDTH * 0.039);
-    const int PADDLE_B_POINTS_X = 2 * WIDTH / 3;
-    const int PADDLE_POINTS_Y = 15;
     const int FONT_SIZE = 100;
     const int WIN_LIMIT = 10;
 
@@ -126,10 +123,9 @@ int main() {
         Rectangle paddle_B = {WIDTH - 5 - PADDLE_WIDTH, paddle_B_y, PADDLE_WIDTH, PADDLE_HEIGHT};
         Rectangle ball = {ball_x, ball_y, BALL_SIZE, BALL_SIZE};
 
-        paddle_bounce = (rand() % BALL_VELOCITY_INCREASE_MAX + 1);
-
         if(CheckCollisionRecs(ball, paddle_A) && ball_velocity_x < 0){
             ball_velocity_x *= -1;
+            paddle_bounce = (rand() % BALL_VELOCITY_INCREASE_MAX + 1);
             if(paddle_A_velocity < 0){
                 ball_velocity_y -= paddle_bounce;
             } 
@@ -141,6 +137,7 @@ int main() {
 
         if(CheckCollisionRecs(ball, paddle_B) && ball_velocity_x > 0){
             ball_velocity_x *= -1;
+            paddle_bounce = (rand() % BALL_VELOCITY_INCREASE_MAX + 1);
             if(paddle_B_velocity < 0){
                 ball_velocity_y -= paddle_bounce;
             } 
@@ -161,8 +158,8 @@ int main() {
         DrawRectangleRec(paddle_B, FG_COLOR);
         DrawRectangleRec(ball, FG_COLOR);
         DrawRectangle((WIDTH / 2) - (HALFLINE_WIDTH / 2), 0, HALFLINE_WIDTH, HEIGHT, FG_COLOR);
-        DrawText(TextFormat("%d", paddle_A_points), PADDLE_A_POINTS_X, PADDLE_POINTS_Y, FONT_SIZE, FG_COLOR);
-        DrawText(TextFormat("%d", paddle_B_points), PADDLE_B_POINTS_X, PADDLE_POINTS_Y, FONT_SIZE, FG_COLOR);
+        DrawText(TextFormat("%d", paddle_A_points), 0.29 * WIDTH, 0.02 * HEIGHT, FONT_SIZE, FG_COLOR);
+        DrawText(TextFormat("%d", paddle_B_points), 0.67 * WIDTH, 0.02 * HEIGHT, FONT_SIZE, FG_COLOR);
 
         if(paddle_A_points == WIN_LIMIT || paddle_B_points == WIN_LIMIT){
             ball_velocity_x = 0;
