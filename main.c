@@ -55,6 +55,19 @@ int main() {
             paddle_B_velocity = 0;
         }
 
+        if(IsKeyPressed(KEY_BACKSPACE)){
+            paddle_A_points = 0;
+            paddle_B_points = 0;
+            paddle_A_velocity = 0;
+            paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2;
+            paddle_B_velocity = 0;
+            paddle_B_y = (HEIGHT - PADDLE_HEIGHT) / 2;
+            ball_velocity_x = 600;
+            ball_velocity_y = 0;
+            ball_x = (WIDTH - BALL_SIZE) / 2;
+            ball_y = (HEIGHT - BALL_SIZE) / 2;
+        }
+
         if(paddle_A_y < 0){
             paddle_A_y = 0;
             paddle_A_velocity = 0;
@@ -158,6 +171,13 @@ int main() {
             ball_y = (HEIGHT - BALL_SIZE) / 2;
             paddle_A_y = ((HEIGHT - PADDLE_HEIGHT) / 2);
             paddle_B_y = ((HEIGHT - PADDLE_HEIGHT) / 2);
+            DrawRectangle(0, 0, WIDTH, HEIGHT, BG_COLOR);
+            if(paddle_A_points > paddle_B_points){
+                DrawText(TextFormat("Player A Won!"), 0.15 * WIDTH, 0.434 * HEIGHT, FONT_SIZE, FG_COLOR);
+            }
+            if(paddle_B_points > paddle_A_points){
+                DrawText(TextFormat("Player B Won!"), 0.15 * WIDTH, 0.434 * HEIGHT, FONT_SIZE, FG_COLOR);
+            }
         }
         
         EndDrawing();
