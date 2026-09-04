@@ -48,11 +48,11 @@ int main() {
         }
 
         if(IsKeyDown(KEY_UP)){
-            paddle_B_velocity = -PADDLE_MOVEMENT;
+            paddle_A_velocity = -PADDLE_MOVEMENT;
         } else if(IsKeyDown(KEY_DOWN)){
-            paddle_B_velocity = PADDLE_MOVEMENT;
+            paddle_A_velocity = PADDLE_MOVEMENT;
         } else{
-            paddle_B_velocity = 0.0f;
+            paddle_A_velocity = 0.0f;
         }
 
         if(IsKeyPressed(KEY_BACKSPACE)){
@@ -173,10 +173,10 @@ int main() {
             paddle_B_y = ((HEIGHT - PADDLE_HEIGHT) / 2.0f);
             DrawRectangle(0.0f, 0.0f, WIDTH, HEIGHT, BG_COLOR);
             if(paddle_A_points > paddle_B_points){
-                DrawText(TextFormat("Player A Won!"), 0.15f * WIDTH, 0.434f * HEIGHT, FONT_SIZE, FG_COLOR);
+                DrawText(TextFormat("YOU WON!"), 0.16f * WIDTH, 0.434f * HEIGHT, FONT_SIZE, FG_COLOR);
             }
             if(paddle_B_points > paddle_A_points){
-                DrawText(TextFormat("Player B Won!"), 0.15f * WIDTH, 0.434f * HEIGHT, FONT_SIZE, FG_COLOR);
+                DrawText(TextFormat("YOU LOST!"), 0.16f * WIDTH, 0.434f * HEIGHT, FONT_SIZE, FG_COLOR);
             }
         }
         
