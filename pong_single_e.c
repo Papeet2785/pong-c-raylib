@@ -18,7 +18,7 @@ int main() {
     const int BOUNCE_MIN = 0.2f * HEIGHT;
     const int BOUNCE_MAX = 0.5f * HEIGHT;
     const float PADDLE_MOVEMENT = 0.6f * WIDTH;
-    const float PADDLE_MOVEMENT_B = 0.1f * WIDTH;
+    const float PADDLE_MOVEMENT_B = 0.3f * WIDTH;
     float bounce = 0.2f * WIDTH;
     float paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
     float paddle_A_velocity = 0.0f;
