@@ -10,14 +10,14 @@ int main() {
     
     const float WIDTH = 1024.0f;
     const float HEIGHT = 768.0f;
+    
     const int FAIL_LIMIT = 3;
-
     int fail = 0;
     const float PADDLE_WIDTH = 0.02f * HEIGHT;
     const float PADDLE_HEIGHT = 0.1f * HEIGHT;
     const int BOUNCE_MIN = 0.2f * HEIGHT;
     const int BOUNCE_MAX = 0.5f * HEIGHT;
-    const float PADDLE_MOVEMENT = 0.6f * WIDTH;
+    const float PADDLE_MOVEMENT = HEIGHT;
     float bounce = 0.2f * WIDTH;
     float paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
     float paddle_A_velocity = 0.0f;
@@ -27,7 +27,7 @@ int main() {
     float ball_y = (HEIGHT - BALL_SIZE) / 2.0f;
     float ball_velocity_x = 0.6f * WIDTH;
     float ball_velocity_y = 0.0f;
-    const float BALL_VELOCITY_Y_LIMIT = 1.04f * HEIGHT;
+    const float BALL_VELOCITY_Y_LIMIT = HEIGHT;
     const float FONT_SIZE = 0.1f * WIDTH;
 
 

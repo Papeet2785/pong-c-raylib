@@ -9,8 +9,8 @@ int main() {
     
     const float WIDTH = 1024.0f;
     const float HEIGHT = 768.0f;
+    
     const int WIN_LIMIT = 10;
-
     int paddle_A_points = 0;
     int paddle_B_points = 0;
     const float PADDLE_WIDTH = 0.02f * HEIGHT;
