@@ -17,8 +17,8 @@ int main() {
     const float PADDLE_HEIGHT = 0.1f * HEIGHT;
     const int BOUNCE_MIN = 0.2f * HEIGHT;
     const int BOUNCE_MAX = 0.5f * HEIGHT;
-    const float PADDLE_MOVEMENT = 0.6f * WIDTH;
-    const float PADDLE_MOVEMENT_B = 0.3f * WIDTH;
+    const float PADDLE_MOVEMENT = 0.9f * HEIGHT;
+    const float PADDLE_MOVEMENT_B = 0.6f * HEIGHT;
     float bounce = 0.2f * WIDTH;
     float paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
     float paddle_A_velocity = 0.0f;
@@ -31,7 +31,7 @@ int main() {
     float ball_y = (HEIGHT - BALL_SIZE) / 2.0f;
     float ball_velocity_x = 0.6f * WIDTH;
     float ball_velocity_y = 0.0f;
-    const float BALL_VELOCITY_Y_LIMIT = 1.04f * HEIGHT;
+    const float BALL_VELOCITY_Y_LIMIT = HEIGHT;
     const float FONT_SIZE = 0.1f * WIDTH;
 
 
@@ -153,12 +153,18 @@ int main() {
             ball_velocity_y = -BALL_VELOCITY_Y_LIMIT;
         }
 
-        if(ball_y > (HEIGHT - BALL_SIZE ) / 2.0f){
-            paddle_B_velocity = PADDLE_MOVEMENT_B;
-        } else if (ball_y < (HEIGHT - BALL_SIZE) / 2.0f){
-            paddle_B_velocity = - PADDLE_MOVEMENT_B;
-        } else {
-            paddle_B_velocity = 0;
+        if(ball_velocity_y >= 0){
+            if(ball_velocity_y <= PADDLE_MOVEMENT_B){
+                paddle_B_velocity = ball_velocity_y;
+            }else{
+                paddle_B_velocity = PADDLE_MOVEMENT_B;
+            }
+        }else{
+            if(ball_velocity_y >= -PADDLE_MOVEMENT_B){
+                paddle_B_velocity = ball_velocity_y;
+            }else{
+                paddle_B_velocity = -PADDLE_MOVEMENT_B;
+            }
         }
 
         DrawRectangleRec(paddle_A, FG_COLOR);
