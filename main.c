@@ -666,7 +666,7 @@ int main() {
 
         Rectangle no_cpu = {0.6f * WIDTH, 0.1 * HEIGHT, 0.3f * WIDTH, 0.3f * HEIGHT};
         DrawRectangleRec(no_cpu, FG_COLOR);
-            if(CheckCollisionPointRec(mouse_position, no_cpu)){
+        if(CheckCollisionPointRec(mouse_position, no_cpu)){
             if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
                 no_cpu_mode(WIDTH, HEIGHT);
                 break;
