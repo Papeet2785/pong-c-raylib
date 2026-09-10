@@ -1,3 +1,5 @@
+//gcc main.c -O1 -Wall -std=c99 -Wno-missing-braces -I include -L lib -lraylib -lopengl32 -lgdi32 -lwinmm -o pong.exe && ./pong.exe
+
 #include <stdlib.h>
 #include <time.h>
 #include "include/raylib.h"
@@ -33,8 +35,6 @@ void multi_player_mode(float WIDTH, float HEIGHT) {
 
 
     while(!WindowShouldClose()){
-        float dt = GetFrameTime();
-
         if(IsKeyDown(KEY_W)){
             paddle_A_velocity = -PADDLE_MOVEMENT;
         } else if(IsKeyDown(KEY_S)){
@@ -110,10 +110,10 @@ void multi_player_mode(float WIDTH, float HEIGHT) {
             paddle_A_points += 1;
         }
 
-        ball_x += ball_velocity_x * dt;
-        ball_y += ball_velocity_y * dt;
-        paddle_A_y += paddle_A_velocity * dt;
-        paddle_B_y += paddle_B_velocity * dt;
+        ball_x += ball_velocity_x * GetFrameTime();
+        ball_y += ball_velocity_y * GetFrameTime();
+        paddle_A_y += paddle_A_velocity * GetFrameTime();
+        paddle_B_y += paddle_B_velocity * GetFrameTime();
 
         BeginDrawing();
         ClearBackground(BG_COLOR);
@@ -202,8 +202,6 @@ void no_cpu_mode(float WIDTH, float HEIGHT) {
     const float FONT_SIZE = 0.1f * WIDTH;
 
     while(!WindowShouldClose()){
-        float dt = GetFrameTime();
-
         if(IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)){
             paddle_A_velocity = -PADDLE_MOVEMENT;
         } else if(IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN)){
@@ -255,9 +253,9 @@ void no_cpu_mode(float WIDTH, float HEIGHT) {
             ball_x = WIDTH - BALL_SIZE;
         }
 
-        ball_x += ball_velocity_x * dt;
-        ball_y += ball_velocity_y * dt;
-        paddle_A_y += paddle_A_velocity * dt;
+        ball_x += ball_velocity_x * GetFrameTime();
+        ball_y += ball_velocity_y * GetFrameTime();
+        paddle_A_y += paddle_A_velocity * GetFrameTime();
 
         BeginDrawing();
         ClearBackground(BG_COLOR);
@@ -313,8 +311,8 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
     const float PADDLE_HEIGHT = 0.1f * HEIGHT;
     const int BOUNCE_MIN = 0.2f * HEIGHT;
     const int BOUNCE_MAX = 0.5f * HEIGHT;
-    const float PADDLE_MOVEMENT = 0.9f * HEIGHT;
-    const float PADDLE_MOVEMENT_B = 0.6f * HEIGHT;
+    const float PADDLE_MOVEMENT = 0.8f * HEIGHT;
+    const float PADDLE_MOVEMENT_B = 0.8f * HEIGHT;
     float bounce = 0.2f * WIDTH;
     float paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
     float paddle_A_velocity = 0.0f;
@@ -331,8 +329,6 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
     const float FONT_SIZE = 0.1f * WIDTH;
 
     while(!WindowShouldClose()){
-        float dt = GetFrameTime();
-
         if(IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)){
             paddle_A_velocity = -PADDLE_MOVEMENT;
         } else if(IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN)){
@@ -402,10 +398,10 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
             paddle_A_points += 1;
         }
 
-        ball_x += ball_velocity_x * dt;
-        ball_y += ball_velocity_y * dt;
-        paddle_A_y += paddle_A_velocity * dt;
-        paddle_B_y += paddle_B_velocity * dt;
+        ball_x += ball_velocity_x * GetFrameTime();
+        ball_y += ball_velocity_y * GetFrameTime();
+        paddle_A_y += paddle_A_velocity * GetFrameTime();
+        paddle_B_y += paddle_B_velocity * GetFrameTime();
 
         BeginDrawing();
         ClearBackground(BG_COLOR);
@@ -512,8 +508,6 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
     const float FONT_SIZE = 0.1f * WIDTH;
 
     while(!WindowShouldClose()){
-        float dt = GetFrameTime();
-
         if(IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)){
             paddle_A_velocity = -PADDLE_MOVEMENT;
         } else if(IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN)){
@@ -574,10 +568,10 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
             paddle_B_velocity = 0.0f;
         }
 
-        ball_x += ball_velocity_x * dt;
-        ball_y += ball_velocity_y * dt;
-        paddle_A_y += paddle_A_velocity * dt;
-        paddle_B_y += paddle_B_velocity * dt;
+        ball_x += ball_velocity_x * GetFrameTime();
+        ball_y += ball_velocity_y * GetFrameTime();
+        paddle_A_y += paddle_A_velocity * GetFrameTime();
+        paddle_B_y += paddle_B_velocity * GetFrameTime();
 
         BeginDrawing();
         ClearBackground(BG_COLOR);
@@ -657,52 +651,47 @@ int main() {
 
         Vector2 mouse_position = GetMousePosition();
 
-        Rectangle multi_player = {0.1f * WIDTH, 0.1f * HEIGHT, 0.3f * WIDTH, 0.3f * HEIGHT};
-        Rectangle no_cpu = {0.6f * WIDTH, 0.1 * HEIGHT, 0.3f * WIDTH, 0.3f * HEIGHT};
-        Rectangle ez_cpu = {0.1f * WIDTH, 0.6f * HEIGHT, 0.3f * WIDTH, 0.3f * HEIGHT};
-        Rectangle hard_cpu = {0.6f * WIDTH, 0.6f * HEIGHT, 0.3f * WIDTH, 0.3f * HEIGHT};
+        BeginDrawing();
+        ClearBackground(BG_COLOR);
 
+        Rectangle multi_player = {0.1f * WIDTH, 0.1f * HEIGHT, 0.3f * WIDTH, 0.3f * HEIGHT};
+        DrawRectangleRec(multi_player, FG_COLOR);
         if(CheckCollisionPointRec(mouse_position, multi_player)){
             if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
                 multi_player_mode(WIDTH, HEIGHT);
                 break;
             }
         }
+        DrawText("2 PLAYER", 0.125f * WIDTH, 0.22f * HEIGHT, MENU_FONT_SIZE, BG_COLOR);
 
-        if(CheckCollisionPointRec(mouse_position, no_cpu)){
+        Rectangle no_cpu = {0.6f * WIDTH, 0.1 * HEIGHT, 0.3f * WIDTH, 0.3f * HEIGHT};
+        DrawRectangleRec(no_cpu, FG_COLOR);
+            if(CheckCollisionPointRec(mouse_position, no_cpu)){
             if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
                 no_cpu_mode(WIDTH, HEIGHT);
                 break;
             }
         }
+        DrawText("NO CPU", 0.655f * WIDTH, 0.22f * HEIGHT, MENU_FONT_SIZE, BG_COLOR);
 
+        Rectangle ez_cpu = {0.1f * WIDTH, 0.6f * HEIGHT, 0.3f * WIDTH, 0.3f * HEIGHT};
+        DrawRectangleRec(ez_cpu, FG_COLOR);
         if(CheckCollisionPointRec(mouse_position, ez_cpu)){
             if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
                 ez_cpu_mode(WIDTH, HEIGHT);
                 break;
             }
         }
+        DrawText("EZ CPU", 0.155f * WIDTH, 0.72f * HEIGHT, MENU_FONT_SIZE, BG_COLOR);
 
+        Rectangle hard_cpu = {0.6f * WIDTH, 0.6f * HEIGHT, 0.3f * WIDTH, 0.3f * HEIGHT};
+        DrawRectangleRec(hard_cpu, FG_COLOR);
         if(CheckCollisionPointRec(mouse_position, hard_cpu)){
             if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
                 hard_cpu_mode(WIDTH, HEIGHT);
                 break;
             }
-        }        
-
-        BeginDrawing();
-        ClearBackground(BG_COLOR);
-
-        DrawRectangleRec(multi_player, FG_COLOR);
-        DrawText("2 PLAYER", 0.125f * WIDTH, 0.22f * HEIGHT, MENU_FONT_SIZE, BG_COLOR);
-
-        DrawRectangleRec(no_cpu, FG_COLOR);
-        DrawText("NO CPU", 0.655f * WIDTH, 0.22f * HEIGHT, MENU_FONT_SIZE, BG_COLOR);
-
-        DrawRectangleRec(ez_cpu, FG_COLOR);
-        DrawText("EZ CPU", 0.155f * WIDTH, 0.72f * HEIGHT, MENU_FONT_SIZE, BG_COLOR);
-
-        DrawRectangleRec(hard_cpu, FG_COLOR);
+        } 
         DrawText("IMPOSSIBLE", 0.61f * WIDTH, 0.72f * HEIGHT, 0.9f * MENU_FONT_SIZE, BG_COLOR);
 
         EndDrawing();
