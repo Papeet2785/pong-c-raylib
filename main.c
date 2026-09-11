@@ -658,7 +658,7 @@ int main() {
 
     const float WIDTH = 1024.0f;
     const float HEIGHT = 768.0f;
-    const float MENU_FONT_SIZE = 0.05f * WIDTH;
+    const float MENU_FONT_SIZE = 0.06f * WIDTH;
 
     srand(time(NULL));
 
@@ -672,41 +672,45 @@ int main() {
         BeginDrawing();
         ClearBackground(BG_COLOR);
 
-        Rectangle multi_player = {0.1f * WIDTH, 0.1f * HEIGHT, 0.3f * WIDTH, 0.3f * HEIGHT};
+        Rectangle multi_player = {0.1f * WIDTH, 0.1f * HEIGHT, 0.35f * WIDTH, 0.35f * HEIGHT};
         DrawRectangleRec(multi_player, FG_COLOR);
         if(CheckCollisionPointRec(mouse_position, multi_player)){
+            DrawRectangleRec(multi_player, FAIL_COLOR);
             if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
                 multi_player_mode(WIDTH, HEIGHT);
             }
         }
-        DrawText("2 PLAYER", 0.125f * WIDTH, 0.22f * HEIGHT, MENU_FONT_SIZE, BG_COLOR);
+        DrawText("2 PLAYER", 0.125f * WIDTH, 0.24f * HEIGHT, MENU_FONT_SIZE, BG_COLOR);
 
-        Rectangle no_cpu = {0.6f * WIDTH, 0.1 * HEIGHT, 0.3f * WIDTH, 0.3f * HEIGHT};
+        Rectangle no_cpu = {0.55f * WIDTH, 0.1 * HEIGHT, 0.35f * WIDTH, 0.35f * HEIGHT};
         DrawRectangleRec(no_cpu, FG_COLOR);
         if(CheckCollisionPointRec(mouse_position, no_cpu)){
+            DrawRectangleRec(no_cpu, FAIL_COLOR);
             if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
                 no_cpu_mode(WIDTH, HEIGHT);
             }
         }
-        DrawText("NO CPU", 0.655f * WIDTH, 0.22f * HEIGHT, MENU_FONT_SIZE, BG_COLOR);
+        DrawText("NO CPU", 0.62f * WIDTH, 0.24f * HEIGHT, MENU_FONT_SIZE, BG_COLOR);
 
-        Rectangle ez_cpu = {0.1f * WIDTH, 0.6f * HEIGHT, 0.3f * WIDTH, 0.3f * HEIGHT};
+        Rectangle ez_cpu = {0.1f * WIDTH, 0.55f * HEIGHT, 0.35f * WIDTH, 0.35f * HEIGHT};
         DrawRectangleRec(ez_cpu, FG_COLOR);
         if(CheckCollisionPointRec(mouse_position, ez_cpu)){
+            DrawRectangleRec(ez_cpu, FAIL_COLOR);
             if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
                 ez_cpu_mode(WIDTH, HEIGHT);
             }
         }
-        DrawText("EZ CPU", 0.155f * WIDTH, 0.72f * HEIGHT, MENU_FONT_SIZE, BG_COLOR);
+        DrawText("EZ CPU", 0.165f * WIDTH, 0.69f * HEIGHT, MENU_FONT_SIZE, BG_COLOR);
 
-        Rectangle hard_cpu = {0.6f * WIDTH, 0.6f * HEIGHT, 0.3f * WIDTH, 0.3f * HEIGHT};
+        Rectangle hard_cpu = {0.55f * WIDTH, 0.55f * HEIGHT, 0.35f * WIDTH, 0.35f * HEIGHT};
         DrawRectangleRec(hard_cpu, FG_COLOR);
         if(CheckCollisionPointRec(mouse_position, hard_cpu)){
+            DrawRectangleRec(hard_cpu, FAIL_COLOR);
             if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
                 hard_cpu_mode(WIDTH, HEIGHT);
             }
         } 
-        DrawText("IMPOSSIBLE", 0.61f * WIDTH, 0.72f * HEIGHT, 0.9f * MENU_FONT_SIZE, BG_COLOR);
+        DrawText("IMPOSSIBLE", 0.562f * WIDTH, 0.69f * HEIGHT, 0.9f * MENU_FONT_SIZE, BG_COLOR);
 
         EndDrawing();
 
