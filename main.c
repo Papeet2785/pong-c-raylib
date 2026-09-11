@@ -1,5 +1,3 @@
-//gcc main.c -O1 -Wall -std=c99 -Wno-missing-braces -I include -L lib -lraylib -lopengl32 -lgdi32 -lwinmm -o pong.exe && ./pong.exe
-
 #include <stdlib.h>
 #include <time.h>
 #include "include/raylib.h"
