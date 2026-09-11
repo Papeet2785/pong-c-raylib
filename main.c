@@ -49,6 +49,10 @@ void multi_player_mode(float WIDTH, float HEIGHT) {
             paddle_B_velocity = 0.0f;
         }
 
+        if(IsKeyPressed(KEY_ESCAPE)){
+            return;
+        }
+
         if(IsKeyPressed(KEY_BACKSPACE)){
             paddle_A_points = 0;
             paddle_B_points = 0;
@@ -208,6 +212,10 @@ void no_cpu_mode(float WIDTH, float HEIGHT) {
             paddle_A_velocity = 0.0f;
         }
 
+        if(IsKeyPressed(KEY_ESCAPE)){
+            return;
+        }
+
         if(IsKeyPressed(KEY_BACKSPACE)){
             fail = 0;
             paddle_A_velocity = 0.0f;
@@ -333,6 +341,10 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
             paddle_A_velocity = PADDLE_MOVEMENT;
         } else{
             paddle_A_velocity = 0.0f;
+        }
+
+        if(IsKeyPressed(KEY_ESCAPE)){
+            return;
         }
 
         if(IsKeyPressed(KEY_BACKSPACE)){
@@ -514,6 +526,10 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
             paddle_A_velocity = 0.0f;
         }
 
+        if(IsKeyPressed(KEY_ESCAPE)){
+            return;
+        }
+
         if(IsKeyPressed(KEY_BACKSPACE)){
             paddle_B_points = 0;
             paddle_A_velocity = 0.0f;
@@ -631,7 +647,6 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
 
     };
     CloseWindow();
-
 }
 
 int main() {
@@ -696,7 +711,5 @@ int main() {
 
     };
     CloseWindow();
-
     return 0;
-    
 }
