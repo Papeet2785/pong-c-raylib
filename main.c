@@ -97,6 +97,8 @@ void multi_player_mode(float WIDTH, float HEIGHT) {
         }
 
         if(ball_x < 0){
+            paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
+            paddle_B_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             ball_x = WIDTH / 2.0f;
             ball_y = HEIGHT / 2.0f;
             ball_velocity_x = 0.59f * WIDTH;
@@ -247,6 +249,7 @@ void no_cpu_mode(float WIDTH, float HEIGHT) {
         }
 
         if(ball_x < 0){
+            paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             ball_x = WIDTH / 2.0f;
             ball_y = HEIGHT / 2.0f;
             ball_velocity_x = 0.59f * WIDTH;
@@ -305,7 +308,7 @@ void no_cpu_mode(float WIDTH, float HEIGHT) {
 
         EndDrawing();
     };
-    CloseWindow();
+    return;
 }
 
 void ez_cpu_mode(float WIDTH, float HEIGHT) {
@@ -393,6 +396,7 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
         if(ball_x < 0){
             ball_x = WIDTH / 2.0f;
             ball_y = HEIGHT / 2.0f;
+            paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             paddle_B_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             ball_velocity_x = 0.59f * WIDTH;
             ball_velocity_y = 0.0f;
@@ -490,7 +494,7 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
         
         EndDrawing();
     };
-    CloseWindow();
+    return;
 }
 
 void hard_cpu_mode(float WIDTH, float HEIGHT) {
@@ -565,6 +569,7 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
         if(ball_x < 0){
             ball_x = WIDTH / 2.0f;
             ball_y = HEIGHT / 2.0f;
+            paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             ball_velocity_x = 0.59f * WIDTH;
             ball_velocity_y = 0.0f;
             paddle_B_points += 1;
@@ -646,7 +651,7 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
         EndDrawing();
 
     };
-    CloseWindow();
+    return;
 }
 
 int main() {
@@ -672,7 +677,6 @@ int main() {
         if(CheckCollisionPointRec(mouse_position, multi_player)){
             if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
                 multi_player_mode(WIDTH, HEIGHT);
-                break;
             }
         }
         DrawText("2 PLAYER", 0.125f * WIDTH, 0.22f * HEIGHT, MENU_FONT_SIZE, BG_COLOR);
@@ -682,7 +686,6 @@ int main() {
         if(CheckCollisionPointRec(mouse_position, no_cpu)){
             if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
                 no_cpu_mode(WIDTH, HEIGHT);
-                break;
             }
         }
         DrawText("NO CPU", 0.655f * WIDTH, 0.22f * HEIGHT, MENU_FONT_SIZE, BG_COLOR);
@@ -692,7 +695,6 @@ int main() {
         if(CheckCollisionPointRec(mouse_position, ez_cpu)){
             if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
                 ez_cpu_mode(WIDTH, HEIGHT);
-                break;
             }
         }
         DrawText("EZ CPU", 0.155f * WIDTH, 0.72f * HEIGHT, MENU_FONT_SIZE, BG_COLOR);
@@ -702,7 +704,6 @@ int main() {
         if(CheckCollisionPointRec(mouse_position, hard_cpu)){
             if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
                 hard_cpu_mode(WIDTH, HEIGHT);
-                break;
             }
         } 
         DrawText("IMPOSSIBLE", 0.61f * WIDTH, 0.72f * HEIGHT, 0.9f * MENU_FONT_SIZE, BG_COLOR);
