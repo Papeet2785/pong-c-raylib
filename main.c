@@ -94,10 +94,14 @@ void multi_player_mode(float WIDTH, float HEIGHT) {
     const float PADDLE_PADDING = 0.005f * WIDTH;
     const float HALFLINE_WIDTH = 0.005f * WIDTH;
     const float BALL_SIZE = 0.02f * WIDTH;
-    float ball_x = (WIDTH - BALL_SIZE) / 2.0f;
-    float ball_y = (HEIGHT - BALL_SIZE) / 2.0f;
-    float ball_velocity_x = 0.6f * WIDTH;
-    float ball_velocity_y = 0.0f;
+    Vector2 ball_position = {
+        (WIDTH - BALL_SIZE) / 2.0f,
+        (HEIGHT - BALL_SIZE) / 2.0f
+    };
+    Vector2 ball_velocity = {
+        (0.6f * WIDTH),
+        0.0f
+    };
     const float BALL_VELOCITY_Y_LIMIT = HEIGHT;
     const float FONT_SIZE = 0.1f * WIDTH;
 
@@ -130,10 +134,10 @@ void multi_player_mode(float WIDTH, float HEIGHT) {
             paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             paddle_B_velocity = 0.0f;
             paddle_B_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
-            ball_velocity_x = 0.59f * WIDTH;
-            ball_velocity_y = 0.0f;
-            ball_x = (WIDTH - BALL_SIZE) / 2.0f;
-            ball_y = (HEIGHT - BALL_SIZE) / 2.0f;
+            ball_velocity.x = 0.59f * WIDTH;
+            ball_velocity.y = 0.0f;
+            ball_position.x = (WIDTH - BALL_SIZE) / 2.0f;
+            ball_position.y = (HEIGHT - BALL_SIZE) / 2.0f;
         }
 
         if(paddle_A_y < 0.0f){
@@ -156,36 +160,36 @@ void multi_player_mode(float WIDTH, float HEIGHT) {
             paddle_B_velocity = 0.0f;
         }
 
-        if(ball_y < 0){
-            ball_y = 0.0f;
-            ball_velocity_y *= -1.0f;
+        if(ball_position.y < 0){
+            ball_position.y = 0.0f;
+            ball_velocity.y *= -1.0f;
         }
 
-        if(ball_y > HEIGHT - BALL_SIZE){
-            ball_y = HEIGHT - BALL_SIZE;
-            ball_velocity_y *= -1.0f;
+        if(ball_position.y > HEIGHT - BALL_SIZE){
+            ball_position.y = HEIGHT - BALL_SIZE;
+            ball_velocity.y *= -1.0f;
         }
 
-        if(ball_x < 0){
+        if(ball_position.x < 0){
             paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             paddle_B_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
-            ball_x = WIDTH / 2.0f;
-            ball_y = HEIGHT / 2.0f;
-            ball_velocity_x = 0.59f * WIDTH;
-            ball_velocity_y = 0.0f;
+            ball_position.x = WIDTH / 2.0f;
+            ball_position.y = HEIGHT / 2.0f;
+            ball_velocity.x = 0.59f * WIDTH;
+            ball_velocity.y = 0.0f;
             paddle_B_points += 1;
         }
 
-        if(ball_x > WIDTH - BALL_SIZE - PADDLE_PADDING){
-            ball_x = WIDTH / 2.0f;
-            ball_y = HEIGHT / 2.0f;
-            ball_velocity_x = -0.59f * WIDTH;
-            ball_velocity_y = 0.0f;
+        if(ball_position.x > WIDTH - BALL_SIZE - PADDLE_PADDING){
+            ball_position.x = WIDTH / 2.0f;
+            ball_position.y = HEIGHT / 2.0f;
+            ball_velocity.x = -0.59f * WIDTH;
+            ball_velocity.y = 0.0f;
             paddle_A_points += 1;
         }
 
-        ball_x += ball_velocity_x * GetFrameTime();
-        ball_y += ball_velocity_y * GetFrameTime();
+        ball_position.x += ball_velocity.x * GetFrameTime();
+        ball_position.y += ball_velocity.y * GetFrameTime();
         paddle_A_y += paddle_A_velocity * GetFrameTime();
         paddle_B_y += paddle_B_velocity * GetFrameTime();
 
@@ -194,37 +198,37 @@ void multi_player_mode(float WIDTH, float HEIGHT) {
 
         Rectangle paddle_A = {PADDLE_PADDING, paddle_A_y, PADDLE_WIDTH, PADDLE_HEIGHT};
         Rectangle paddle_B = {WIDTH - PADDLE_PADDING - PADDLE_WIDTH, paddle_B_y, PADDLE_WIDTH, PADDLE_HEIGHT};
-        Rectangle ball = {ball_x, ball_y, BALL_SIZE, BALL_SIZE};
+        Rectangle ball = {ball_position.x, ball_position.y, BALL_SIZE, BALL_SIZE};
 
-        if(CheckCollisionRecs(ball, paddle_A) && ball_velocity_x < 0){
-            ball_velocity_x *= -1.0f;
+        if(CheckCollisionRecs(ball, paddle_A) && ball_velocity.x < 0){
+            ball_velocity.x *= -1.0f;
             bounce = (rand() % (BOUNCE_MAX - BOUNCE_MIN + 1) + BOUNCE_MIN);
             if(paddle_A_velocity < 0){
-                ball_velocity_y -= bounce;
+                ball_velocity.y -= bounce;
             } 
             else if(paddle_A_velocity > 0){
-                ball_velocity_y += bounce;
+                ball_velocity.y += bounce;
             }
-            ball_x = PADDLE_PADDING + PADDLE_WIDTH;
+            ball_position.x = PADDLE_PADDING + PADDLE_WIDTH;
         }  
 
-        if(CheckCollisionRecs(ball, paddle_B) && ball_velocity_x > 0){
-            ball_velocity_x *= -1;
+        if(CheckCollisionRecs(ball, paddle_B) && ball_velocity.x > 0){
+            ball_velocity.x *= -1;
             bounce = (rand() % (BOUNCE_MAX - BOUNCE_MIN + 1) + BOUNCE_MIN);
             if(paddle_B_velocity < 0){
-                ball_velocity_y -= bounce;
+                ball_velocity.y -= bounce;
             } 
             else if(paddle_B_velocity > 0){
-                ball_velocity_y += bounce;
+                ball_velocity.y += bounce;
             }
-            ball_x = WIDTH - PADDLE_PADDING - PADDLE_WIDTH - BALL_SIZE;
+            ball_position.x = WIDTH - PADDLE_PADDING - PADDLE_WIDTH - BALL_SIZE;
         }
 
-        if(ball_velocity_y > BALL_VELOCITY_Y_LIMIT){
-            ball_velocity_y = BALL_VELOCITY_Y_LIMIT;
+        if(ball_velocity.y > BALL_VELOCITY_Y_LIMIT){
+            ball_velocity.y = BALL_VELOCITY_Y_LIMIT;
         }
-        if(ball_velocity_y < -BALL_VELOCITY_Y_LIMIT){
-            ball_velocity_y = -BALL_VELOCITY_Y_LIMIT;
+        if(ball_velocity.y < -BALL_VELOCITY_Y_LIMIT){
+            ball_velocity.y = -BALL_VELOCITY_Y_LIMIT;
         }
 
         DrawRectangleRec(paddle_A, FG_COLOR);
@@ -235,10 +239,10 @@ void multi_player_mode(float WIDTH, float HEIGHT) {
         DrawText(TextFormat("%d", paddle_B_points), 0.67f * WIDTH, 0.02f * HEIGHT, FONT_SIZE, FG_COLOR);
 
         if(paddle_A_points == WIN_LIMIT || paddle_B_points == WIN_LIMIT){
-            ball_velocity_x = 0.0f;
-            ball_velocity_y = 0.0f;
-            ball_x = (WIDTH - BALL_SIZE) / 2.0f;
-            ball_y = (HEIGHT - BALL_SIZE) / 2.0f;
+            ball_velocity.x = 0.0f;
+            ball_velocity.y = 0.0f;
+            ball_position.x = (WIDTH - BALL_SIZE) / 2.0f;
+            ball_position.y = (HEIGHT - BALL_SIZE) / 2.0f;
             paddle_A_y = ((HEIGHT - PADDLE_HEIGHT) / 2.0f);
             paddle_B_y = ((HEIGHT - PADDLE_HEIGHT) / 2.0f);
             DrawRectangle(0.0f, 0.0f, WIDTH, HEIGHT, BG_COLOR);
@@ -268,10 +272,14 @@ void no_cpu_mode(float WIDTH, float HEIGHT) {
     float paddle_A_velocity = 0.0f;
     const float PADDLE_PADDING = 0.005f * WIDTH;
     const float BALL_SIZE = 0.02f * WIDTH;
-    float ball_x = (WIDTH - BALL_SIZE) / 2.0f;
-    float ball_y = (HEIGHT - BALL_SIZE) / 2.0f;
-    float ball_velocity_x = 0.6f * WIDTH;
-    float ball_velocity_y = 0.0f;
+    Vector2 ball_position = {
+        (WIDTH - BALL_SIZE) / 2.0f,
+        (HEIGHT - BALL_SIZE) / 2.0f
+    };
+    Vector2 ball_velocity = {
+        (0.6f * WIDTH),
+        0.0f
+    };
     const float BALL_VELOCITY_Y_LIMIT = HEIGHT;
     const float FONT_SIZE = 0.1f * WIDTH;
 
@@ -292,10 +300,10 @@ void no_cpu_mode(float WIDTH, float HEIGHT) {
             fail = 0;
             paddle_A_velocity = 0.0f;
             paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
-            ball_velocity_x = 0.59f * WIDTH;
-            ball_velocity_y = 0.0f;
-            ball_x = (WIDTH - BALL_SIZE) / 2.0f;
-            ball_y = (HEIGHT - BALL_SIZE) / 2.0f;
+            ball_velocity.x = 0.59f * WIDTH;
+            ball_velocity.y = 0.0f;
+            ball_position.x = (WIDTH - BALL_SIZE) / 2.0f;
+            ball_position.y = (HEIGHT - BALL_SIZE) / 2.0f;
         }
 
         if(paddle_A_y < 0.0f){
@@ -308,57 +316,57 @@ void no_cpu_mode(float WIDTH, float HEIGHT) {
             paddle_A_velocity = 0.0f;
         }
 
-        if(ball_y < 0){
-            ball_y = 0.0f;
-            ball_velocity_y *= -1.0f;
+        if(ball_position.y < 0){
+            ball_position.y = 0.0f;
+            ball_velocity.y *= -1.0f;
         }
 
-        if(ball_y > HEIGHT - BALL_SIZE){
-            ball_y = HEIGHT - BALL_SIZE;
-            ball_velocity_y *= -1.0f;
+        if(ball_position.y > HEIGHT - BALL_SIZE){
+            ball_position.y = HEIGHT - BALL_SIZE;
+            ball_velocity.y *= -1.0f;
         }
 
-        if(ball_x < 0){
+        if(ball_position.x < 0){
             paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
-            ball_x = WIDTH / 2.0f;
-            ball_y = HEIGHT / 2.0f;
-            ball_velocity_x = 0.59f * WIDTH;
-            ball_velocity_y = 0.0f;
+            ball_position.x = WIDTH / 2.0f;
+            ball_position.y = HEIGHT / 2.0f;
+            ball_velocity.x = 0.59f * WIDTH;
+            ball_velocity.y = 0.0f;
             fail++;
         }
 
-        if(ball_x > WIDTH - BALL_SIZE){
-            ball_velocity_x *= -1;
-            ball_x = WIDTH - BALL_SIZE;
+        if(ball_position.x > WIDTH - BALL_SIZE){
+            ball_velocity.x *= -1;
+            ball_position.x = WIDTH - BALL_SIZE;
         }
 
-        ball_x += ball_velocity_x * GetFrameTime();
-        ball_y += ball_velocity_y * GetFrameTime();
+        ball_position.x += ball_velocity.x * GetFrameTime();
+        ball_position.y += ball_velocity.y * GetFrameTime();
         paddle_A_y += paddle_A_velocity * GetFrameTime();
 
         BeginDrawing();
         ClearBackground(BG_COLOR);
 
         Rectangle paddle_A = {PADDLE_PADDING, paddle_A_y, PADDLE_WIDTH, PADDLE_HEIGHT};
-        Rectangle ball = {ball_x, ball_y, BALL_SIZE, BALL_SIZE};
+        Rectangle ball = {ball_position.x, ball_position.y, BALL_SIZE, BALL_SIZE};
 
-        if(CheckCollisionRecs(ball, paddle_A) && ball_velocity_x < 0){
-            ball_velocity_x *= -1.0f;
+        if(CheckCollisionRecs(ball, paddle_A) && ball_velocity.x < 0){
+            ball_velocity.x *= -1.0f;
             bounce = (rand() % (BOUNCE_MAX - BOUNCE_MIN + 1) + BOUNCE_MIN);
             if(paddle_A_velocity < 0){
-                ball_velocity_y -= bounce;
+                ball_velocity.y -= bounce;
             } 
             else if(paddle_A_velocity > 0){
-                ball_velocity_y += bounce;
+                ball_velocity.y += bounce;
             }
-            ball_x = PADDLE_PADDING + PADDLE_WIDTH;
+            ball_position.x = PADDLE_PADDING + PADDLE_WIDTH;
         }
 
-        if(ball_velocity_y > BALL_VELOCITY_Y_LIMIT){
-            ball_velocity_y = BALL_VELOCITY_Y_LIMIT;
+        if(ball_velocity.y > BALL_VELOCITY_Y_LIMIT){
+            ball_velocity.y = BALL_VELOCITY_Y_LIMIT;
         }
-        if(ball_velocity_y < -BALL_VELOCITY_Y_LIMIT){
-            ball_velocity_y = -BALL_VELOCITY_Y_LIMIT;
+        if(ball_velocity.y < -BALL_VELOCITY_Y_LIMIT){
+            ball_velocity.y = -BALL_VELOCITY_Y_LIMIT;
         }
 
         DrawRectangleRec(paddle_A, FG_COLOR);
@@ -366,10 +374,10 @@ void no_cpu_mode(float WIDTH, float HEIGHT) {
         DrawText(TextFormat("%d", fail), 0.49f * WIDTH, 0.1f * HEIGHT, FONT_SIZE, FAIL_COLOR);
 
         if(fail >= FAIL_LIMIT){
-            ball_velocity_x = 0.0f;
-            ball_velocity_y = 0.0f;
-            ball_x = (WIDTH - BALL_SIZE) / 2.0f;
-            ball_y = (HEIGHT - BALL_SIZE) / 2.0f;
+            ball_velocity.x = 0.0f;
+            ball_velocity.y = 0.0f;
+            ball_position.x = (WIDTH - BALL_SIZE) / 2.0f;
+            ball_position.y = (HEIGHT - BALL_SIZE) / 2.0f;
             paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             paddle_A_velocity = 0.0f;
             DrawRectangle(0.0f, 0.0f, WIDTH, HEIGHT, BG_COLOR);
@@ -400,10 +408,14 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
     const float PADDLE_PADDING = 0.005f * WIDTH;
     const float HALFLINE_WIDTH = 0.005f * WIDTH;
     const float BALL_SIZE = 0.02f * WIDTH;
-    float ball_x = (WIDTH - BALL_SIZE) / 2.0f;
-    float ball_y = (HEIGHT - BALL_SIZE) / 2.0f;
-    float ball_velocity_x = 0.6f * WIDTH;
-    float ball_velocity_y = 0.0f;
+    Vector2 ball_position = {
+        (WIDTH - BALL_SIZE) / 2.0f,
+        (HEIGHT - BALL_SIZE) / 2.0f
+    };
+    Vector2 ball_velocity = {
+        (0.6f * WIDTH),
+        0.0f
+    };
     const float BALL_VELOCITY_Y_LIMIT = HEIGHT;
     const float FONT_SIZE = 0.1f * WIDTH;
 
@@ -427,10 +439,10 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
             paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             paddle_B_velocity = 0.0f;
             paddle_B_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
-            ball_velocity_x = 0.59f * WIDTH;
-            ball_velocity_y = 0.0f;
-            ball_x = (WIDTH - BALL_SIZE) / 2.0f;
-            ball_y = (HEIGHT - BALL_SIZE) / 2.0f;
+            ball_velocity.x = 0.59f * WIDTH;
+            ball_velocity.y = 0.0f;
+            ball_position.x = (WIDTH - BALL_SIZE) / 2.0f;
+            ball_position.y = (HEIGHT - BALL_SIZE) / 2.0f;
         }
 
         if(paddle_A_y < 0.0f){
@@ -453,37 +465,37 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
             paddle_B_velocity = 0.0f;
         }
 
-        if(ball_y < 0){
-            ball_y = 0.0f;
-            ball_velocity_y *= -1.0f;
+        if(ball_position.y < 0){
+            ball_position.y = 0.0f;
+            ball_velocity.y *= -1.0f;
         }
 
-        if(ball_y > HEIGHT - BALL_SIZE){
-            ball_y = HEIGHT - BALL_SIZE;
-            ball_velocity_y *= -1.0f;
+        if(ball_position.y > HEIGHT - BALL_SIZE){
+            ball_position.y = HEIGHT - BALL_SIZE;
+            ball_velocity.y *= -1.0f;
         }
 
-        if(ball_x < 0){
-            ball_x = WIDTH / 2.0f;
-            ball_y = HEIGHT / 2.0f;
+        if(ball_position.x < 0){
+            ball_position.x = WIDTH / 2.0f;
+            ball_position.y = HEIGHT / 2.0f;
             paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             paddle_B_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
-            ball_velocity_x = 0.59f * WIDTH;
-            ball_velocity_y = 0.0f;
+            ball_velocity.x = 0.59f * WIDTH;
+            ball_velocity.y = 0.0f;
             paddle_B_points += 1;
         }
 
-        if(ball_x > WIDTH - BALL_SIZE - PADDLE_PADDING){
-            ball_x = WIDTH / 2.0f;
-            ball_y = HEIGHT / 2.0f;
-            ball_velocity_x = -0.59f * WIDTH;
+        if(ball_position.x > WIDTH - BALL_SIZE - PADDLE_PADDING){
+            ball_position.x = WIDTH / 2.0f;
+            ball_position.y = HEIGHT / 2.0f;
+            ball_velocity.x = -0.59f * WIDTH;
             paddle_B_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
-            ball_velocity_y = 0.0f;
+            ball_velocity.y = 0.0f;
             paddle_A_points += 1;
         }
 
-        ball_x += ball_velocity_x * GetFrameTime();
-        ball_y += ball_velocity_y * GetFrameTime();
+        ball_position.x += ball_velocity.x * GetFrameTime();
+        ball_position.y += ball_velocity.y * GetFrameTime();
         paddle_A_y += paddle_A_velocity * GetFrameTime();
         paddle_B_y += paddle_B_velocity * GetFrameTime();
 
@@ -492,48 +504,48 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
 
         Rectangle paddle_A = {PADDLE_PADDING, paddle_A_y, PADDLE_WIDTH, PADDLE_HEIGHT};
         Rectangle paddle_B = {WIDTH - PADDLE_PADDING - PADDLE_WIDTH, paddle_B_y, PADDLE_WIDTH, PADDLE_HEIGHT};
-        Rectangle ball = {ball_x, ball_y, BALL_SIZE, BALL_SIZE};
+        Rectangle ball = {ball_position.x, ball_position.y, BALL_SIZE, BALL_SIZE};
 
-        if(CheckCollisionRecs(ball, paddle_A) && ball_velocity_x < 0){
-            ball_velocity_x *= -1.0f;
+        if(CheckCollisionRecs(ball, paddle_A) && ball_velocity.x < 0){
+            ball_velocity.x *= -1.0f;
             bounce = (rand() % (BOUNCE_MAX - BOUNCE_MIN + 1) + BOUNCE_MIN);
             if(paddle_A_velocity < 0){
-                ball_velocity_y -= bounce;
+                ball_velocity.y -= bounce;
             } 
             else if(paddle_A_velocity > 0){
-                ball_velocity_y += bounce;
+                ball_velocity.y += bounce;
             }
-            ball_x = PADDLE_PADDING + PADDLE_WIDTH;
+            ball_position.x = PADDLE_PADDING + PADDLE_WIDTH;
         }  
 
-        if(CheckCollisionRecs(ball, paddle_B) && ball_velocity_x > 0){
-            ball_velocity_x *= -1;
+        if(CheckCollisionRecs(ball, paddle_B) && ball_velocity.x > 0){
+            ball_velocity.x *= -1;
             bounce = (rand() % (BOUNCE_MAX - BOUNCE_MIN + 1) + BOUNCE_MIN);
             if(paddle_B_velocity < 0){
-                ball_velocity_y -= bounce;
+                ball_velocity.y -= bounce;
             } 
             else if(paddle_B_velocity > 0){
-                ball_velocity_y += bounce;
+                ball_velocity.y += bounce;
             }
-            ball_x = WIDTH - PADDLE_PADDING - PADDLE_WIDTH - BALL_SIZE;
+            ball_position.x = WIDTH - PADDLE_PADDING - PADDLE_WIDTH - BALL_SIZE;
         }
 
-        if(ball_velocity_y > BALL_VELOCITY_Y_LIMIT){
-            ball_velocity_y = BALL_VELOCITY_Y_LIMIT;
+        if(ball_velocity.y > BALL_VELOCITY_Y_LIMIT){
+            ball_velocity.y = BALL_VELOCITY_Y_LIMIT;
         }
-        if(ball_velocity_y < -BALL_VELOCITY_Y_LIMIT){
-            ball_velocity_y = -BALL_VELOCITY_Y_LIMIT;
+        if(ball_velocity.y < -BALL_VELOCITY_Y_LIMIT){
+            ball_velocity.y = -BALL_VELOCITY_Y_LIMIT;
         }
 
-        if(ball_velocity_y >= 0){
-            if(ball_velocity_y <= PADDLE_MOVEMENT_B){
-                paddle_B_velocity = ball_velocity_y;
+        if(ball_velocity.y >= 0){
+            if(ball_velocity.y <= PADDLE_MOVEMENT_B){
+                paddle_B_velocity = ball_velocity.y;
             }else{
                 paddle_B_velocity = PADDLE_MOVEMENT_B;
             }
         }else{
-            if(ball_velocity_y >= -PADDLE_MOVEMENT_B){
-                paddle_B_velocity = ball_velocity_y;
+            if(ball_velocity.y >= -PADDLE_MOVEMENT_B){
+                paddle_B_velocity = ball_velocity.y;
             }else{
                 paddle_B_velocity = -PADDLE_MOVEMENT_B;
             }
@@ -547,10 +559,10 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
         DrawText(TextFormat("%d", paddle_B_points), 0.67f * WIDTH, 0.02f * HEIGHT, FONT_SIZE, FG_COLOR);
 
         if(paddle_A_points == WIN_LIMIT || paddle_B_points == WIN_LIMIT){
-            ball_velocity_x = 0.0f;
-            ball_velocity_y = 0.0f;
-            ball_x = (WIDTH - BALL_SIZE) / 2.0f;
-            ball_y = (HEIGHT - BALL_SIZE) / 2.0f;
+            ball_velocity.x = 0.0f;
+            ball_velocity.y = 0.0f;
+            ball_position.x = (WIDTH - BALL_SIZE) / 2.0f;
+            ball_position.y = (HEIGHT - BALL_SIZE) / 2.0f;
             paddle_A_y = ((HEIGHT - PADDLE_HEIGHT) / 2.0f);
             paddle_B_y = ((HEIGHT - PADDLE_HEIGHT) / 2.0f);
             DrawRectangle(0.0f, 0.0f, WIDTH, HEIGHT, BG_COLOR);
@@ -584,10 +596,14 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
     const float PADDLE_PADDING = 0.005f * WIDTH;
     const float HALFLINE_WIDTH = 0.005f * WIDTH;
     const float BALL_SIZE = 0.02f * WIDTH;
-    float ball_x = (WIDTH - BALL_SIZE) / 2.0f;
-    float ball_y = (HEIGHT - BALL_SIZE) / 2.0f;
-    float ball_velocity_x = 0.6f * WIDTH;
-    float ball_velocity_y = 0.0f;
+    Vector2 ball_position = {
+        (WIDTH - BALL_SIZE) / 2.0f,
+        (HEIGHT - BALL_SIZE) / 2.0f
+    };
+    Vector2 ball_velocity = {
+        (0.6f * WIDTH),
+        0.0f
+    };
     const float BALL_VELOCITY_Y_LIMIT = HEIGHT;
     const float FONT_SIZE = 0.1f * WIDTH;
 
@@ -610,10 +626,10 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
             paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             paddle_B_velocity = 0.0f;
             paddle_B_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
-            ball_velocity_x = 0.59f * WIDTH;
-            ball_velocity_y = 0.0f;
-            ball_x = (WIDTH - BALL_SIZE) / 2.0f;
-            ball_y = (HEIGHT - BALL_SIZE) / 2.0f;
+            ball_velocity.x = 0.59f * WIDTH;
+            ball_velocity.y = 0.0f;
+            ball_position.x = (WIDTH - BALL_SIZE) / 2.0f;
+            ball_position.y = (HEIGHT - BALL_SIZE) / 2.0f;
         }
 
         if(paddle_A_y > HEIGHT - PADDLE_HEIGHT){
@@ -626,26 +642,26 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
             paddle_B_velocity = 0.0f;
         }
 
-        if(ball_y < 0){
-            ball_y = 0.0f;
-            ball_velocity_y *= -1.0f;
+        if(ball_position.y < 0){
+            ball_position.y = 0.0f;
+            ball_velocity.y *= -1.0f;
         }
 
-        if(ball_y > HEIGHT - BALL_SIZE){
-            ball_y = HEIGHT - BALL_SIZE;
-            ball_velocity_y *= -1.0f;
+        if(ball_position.y > HEIGHT - BALL_SIZE){
+            ball_position.y = HEIGHT - BALL_SIZE;
+            ball_velocity.y *= -1.0f;
         }
 
-        if(ball_x < 0){
-            ball_x = WIDTH / 2.0f;
-            ball_y = HEIGHT / 2.0f;
+        if(ball_position.x < 0){
+            ball_position.x = WIDTH / 2.0f;
+            ball_position.y = HEIGHT / 2.0f;
             paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
-            ball_velocity_x = 0.59f * WIDTH;
-            ball_velocity_y = 0.0f;
+            ball_velocity.x = 0.59f * WIDTH;
+            ball_velocity.y = 0.0f;
             paddle_B_points += 1;
         }
 
-        paddle_B_y = ball_y - (PADDLE_HEIGHT - BALL_SIZE) / 2.0f;
+        paddle_B_y = ball_position.y - (PADDLE_HEIGHT - BALL_SIZE) / 2.0f;
 
         if(paddle_A_y < 0.0f){
             paddle_A_y = 0.0f;
@@ -657,8 +673,8 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
             paddle_B_velocity = 0.0f;
         }
 
-        ball_x += ball_velocity_x * GetFrameTime();
-        ball_y += ball_velocity_y * GetFrameTime();
+        ball_position.x += ball_velocity.x * GetFrameTime();
+        ball_position.y += ball_velocity.y * GetFrameTime();
         paddle_A_y += paddle_A_velocity * GetFrameTime();
         paddle_B_y += paddle_B_velocity * GetFrameTime();
 
@@ -667,37 +683,37 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
 
         Rectangle paddle_A = {PADDLE_PADDING, paddle_A_y, PADDLE_WIDTH, PADDLE_HEIGHT};
         Rectangle paddle_B = {WIDTH - PADDLE_PADDING - PADDLE_WIDTH, paddle_B_y, PADDLE_WIDTH, PADDLE_HEIGHT};
-        Rectangle ball = {ball_x, ball_y, BALL_SIZE, BALL_SIZE};
+        Rectangle ball = {ball_position.x, ball_position.y, BALL_SIZE, BALL_SIZE};
 
-        if(CheckCollisionRecs(ball, paddle_A) && ball_velocity_x < 0){
-            ball_velocity_x *= -1.0f;
+        if(CheckCollisionRecs(ball, paddle_A) && ball_velocity.x < 0){
+            ball_velocity.x *= -1.0f;
             bounce = (rand() % (BOUNCE_MAX - BOUNCE_MIN + 1) + BOUNCE_MIN);
             if(paddle_A_velocity < 0){
-                ball_velocity_y -= bounce;
+                ball_velocity.y -= bounce;
             } 
             else if(paddle_A_velocity > 0){
-                ball_velocity_y += bounce;
+                ball_velocity.y += bounce;
             }
-            ball_x = PADDLE_PADDING + PADDLE_WIDTH;
+            ball_position.x = PADDLE_PADDING + PADDLE_WIDTH;
         }  
 
-        if(CheckCollisionRecs(ball, paddle_B) && ball_velocity_x > 0){
-            ball_velocity_x *= -1;
+        if(CheckCollisionRecs(ball, paddle_B) && ball_velocity.x > 0){
+            ball_velocity.x *= -1;
             bounce = (rand() % (BOUNCE_MAX - BOUNCE_MIN + 1) + BOUNCE_MIN);
             if(paddle_B_velocity < 0){
-                ball_velocity_y -= bounce;
+                ball_velocity.y -= bounce;
             } 
             else if(paddle_B_velocity > 0){
-                ball_velocity_y += bounce;
+                ball_velocity.y += bounce;
             }
-            ball_x = WIDTH - PADDLE_PADDING - PADDLE_WIDTH - BALL_SIZE;
+            ball_position.x = WIDTH - PADDLE_PADDING - PADDLE_WIDTH - BALL_SIZE;
         }
 
-        if(ball_velocity_y > BALL_VELOCITY_Y_LIMIT){
-            ball_velocity_y = BALL_VELOCITY_Y_LIMIT;
+        if(ball_velocity.y > BALL_VELOCITY_Y_LIMIT){
+            ball_velocity.y = BALL_VELOCITY_Y_LIMIT;
         }
-        if(ball_velocity_y < -BALL_VELOCITY_Y_LIMIT){
-            ball_velocity_y = -BALL_VELOCITY_Y_LIMIT;
+        if(ball_velocity.y < -BALL_VELOCITY_Y_LIMIT){
+            ball_velocity.y = -BALL_VELOCITY_Y_LIMIT;
         }
 
         DrawRectangleRec(paddle_A, FG_COLOR);
@@ -708,10 +724,10 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
         DrawText(TextFormat("%d", paddle_B_points), 0.67f * WIDTH, 0.02f * HEIGHT, FONT_SIZE, FG_COLOR);
 
         if(paddle_B_points == WIN_LIMIT){
-            ball_velocity_x = 0.0f;
-            ball_velocity_y = 0.0f;
-            ball_x = (WIDTH - BALL_SIZE) / 2.0f;
-            ball_y = (HEIGHT - BALL_SIZE) / 2.0f;
+            ball_velocity.x = 0.0f;
+            ball_velocity.y = 0.0f;
+            ball_position.x = (WIDTH - BALL_SIZE) / 2.0f;
+            ball_position.y = (HEIGHT - BALL_SIZE) / 2.0f;
             paddle_A_y = ((HEIGHT - PADDLE_HEIGHT) / 2.0f);
             paddle_B_y = ((HEIGHT - PADDLE_HEIGHT) / 2.0f);
             DrawRectangle(0.0f, 0.0f, WIDTH, HEIGHT, BG_COLOR);
