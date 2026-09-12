@@ -10,6 +10,7 @@ void multi_player_mode(float WIDTH, float HEIGHT);
 void no_cpu_mode(float WIDTH, float HEIGHT);
 void ez_cpu_mode(float WIDTH, float HEIGHT);
 void hard_cpu_mode(float WIDTH, float HEIGHT);
+void base_keybinds(float WIDTH, float HEIGHT, float PADDLE_HEIGHT, float BALL_SIZE, Vector2 ball_position, Vector2 ball_velocity, float PADDLE_MOVEMENT, float paddle_A_velocity, float paddle_A_y, float paddle_B_y, float paddle_B_velocity, int paddle_A_points, int paddle_B_points);
 
 int main() {
 
@@ -76,6 +77,33 @@ int main() {
     return 0;
 }
 
+void base_keybinds(float WIDTH, float HEIGHT, float PADDLE_HEIGHT, float BALL_SIZE, Vector2 ball_position, Vector2 ball_velocity, float PADDLE_MOVEMENT, float paddle_A_velocity, float paddle_A_y, float paddle_B_y, float paddle_B_velocity, int paddle_A_points, int paddle_B_points) {
+    if(IsKeyDown(KEY_W)){
+        paddle_A_velocity = -PADDLE_MOVEMENT;
+    } else if(IsKeyDown(KEY_S)){
+        paddle_A_velocity = PADDLE_MOVEMENT;
+    } else{
+        paddle_A_velocity = 0.0f;
+    }
+
+    if(IsKeyPressed(KEY_ESCAPE)){
+        return;
+    }
+
+    if(IsKeyPressed(KEY_BACKSPACE)){
+        paddle_A_points = 0;
+        paddle_B_points = 0;
+        paddle_A_velocity = 0.0f;
+        paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
+        paddle_B_velocity = 0.0f;
+        paddle_B_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
+        ball_velocity.x = 0.59f * WIDTH;
+        ball_velocity.y = 0.0f;
+        ball_position.x = (WIDTH - BALL_SIZE) / 2.0f;
+        ball_position.y = (HEIGHT - BALL_SIZE) / 2.0f;
+    }
+}
+
 void multi_player_mode(float WIDTH, float HEIGHT) {
 
     const int WIN_LIMIT = 10;
@@ -107,13 +135,7 @@ void multi_player_mode(float WIDTH, float HEIGHT) {
 
 
     while(!WindowShouldClose()){
-        if(IsKeyDown(KEY_W)){
-            paddle_A_velocity = -PADDLE_MOVEMENT;
-        } else if(IsKeyDown(KEY_S)){
-            paddle_A_velocity = PADDLE_MOVEMENT;
-        } else{
-            paddle_A_velocity = 0.0f;
-        }
+        base_keybinds(WIDTH, HEIGHT, PADDLE_HEIGHT, BALL_SIZE, ball_position, ball_velocity, PADDLE_MOVEMENT, paddle_A_velocity, paddle_A_y, paddle_B_y,  paddle_B_velocity, paddle_A_points, paddle_B_points);
 
         if(IsKeyDown(KEY_UP)){
             paddle_B_velocity = -PADDLE_MOVEMENT;
@@ -121,23 +143,6 @@ void multi_player_mode(float WIDTH, float HEIGHT) {
             paddle_B_velocity = PADDLE_MOVEMENT;
         } else{
             paddle_B_velocity = 0.0f;
-        }
-
-        if(IsKeyPressed(KEY_ESCAPE)){
-            return;
-        }
-
-        if(IsKeyPressed(KEY_BACKSPACE)){
-            paddle_A_points = 0;
-            paddle_B_points = 0;
-            paddle_A_velocity = 0.0f;
-            paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
-            paddle_B_velocity = 0.0f;
-            paddle_B_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
-            ball_velocity.x = 0.59f * WIDTH;
-            ball_velocity.y = 0.0f;
-            ball_position.x = (WIDTH - BALL_SIZE) / 2.0f;
-            ball_position.y = (HEIGHT - BALL_SIZE) / 2.0f;
         }
 
         if(paddle_A_y < 0.0f){
@@ -420,30 +425,7 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
     const float FONT_SIZE = 0.1f * WIDTH;
 
     while(!WindowShouldClose()){
-        if(IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)){
-            paddle_A_velocity = -PADDLE_MOVEMENT;
-        } else if(IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN)){
-            paddle_A_velocity = PADDLE_MOVEMENT;
-        } else{
-            paddle_A_velocity = 0.0f;
-        }
-
-        if(IsKeyPressed(KEY_ESCAPE)){
-            return;
-        }
-
-        if(IsKeyPressed(KEY_BACKSPACE)){
-            paddle_A_points = 0;
-            paddle_B_points = 0;
-            paddle_A_velocity = 0.0f;
-            paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
-            paddle_B_velocity = 0.0f;
-            paddle_B_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
-            ball_velocity.x = 0.59f * WIDTH;
-            ball_velocity.y = 0.0f;
-            ball_position.x = (WIDTH - BALL_SIZE) / 2.0f;
-            ball_position.y = (HEIGHT - BALL_SIZE) / 2.0f;
-        }
+        base_keybinds(WIDTH, HEIGHT, PADDLE_HEIGHT, BALL_SIZE, ball_position, ball_velocity, PADDLE_MOVEMENT, paddle_A_velocity, paddle_A_y, paddle_B_y,  paddle_B_velocity, paddle_A_points, paddle_B_points);
 
         if(paddle_A_y < 0.0f){
             paddle_A_y = 0.0f;
