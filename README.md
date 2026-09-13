@@ -6,6 +6,7 @@ This project is a rewrite of my original Pygame Squash/Pong project in C. The go
 
 ## Features
 
+- Menu to select (Multiplayer, no_cpu squash, ez_cpu, impossible_cpu)
 - Two-player local multiplayer
 - Player A controlled with `W` / `S`
 - Player B controlled with `↑` / `↓`
@@ -20,7 +21,6 @@ This project is a rewrite of my original Pygame Squash/Pong project in C. The go
 - Score tracking
 - Center dividing line
 - High-DPI support
-- Undecorated game window
 
 ## Controls
 
@@ -38,4 +38,5 @@ Close the game using the window manager or the normal window-close action.
 The project requires:
 
 - C compiler (`clang` or `gcc`)
+- Raylib (included in repo)
 
