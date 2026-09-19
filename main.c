@@ -397,9 +397,9 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
     const float PADDLE_WIDTH = 0.02f * HEIGHT;
     const float PADDLE_HEIGHT = 0.1f * HEIGHT;
     const int BOUNCE_MIN = 0.2f * HEIGHT;
-    const int BOUNCE_MAX = 0.5f * HEIGHT;
-    const float PADDLE_MOVEMENT = 0.8f * HEIGHT;
-    const float PADDLE_MOVEMENT_B = 0.8f * HEIGHT;
+    const int BOUNCE_MAX = 0.4f * HEIGHT;
+    const float PADDLE_MOVEMENT = 1.0f * HEIGHT;
+    const float PADDLE_MOVEMENT_B = 0.6f * HEIGHT;
     float bounce = 0.2f * WIDTH;
     float paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
     float paddle_A_velocity = 0.0f;
@@ -416,7 +416,7 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
         (0.6f * WIDTH),
         0.0f
     };
-    const float BALL_VELOCITY_Y_LIMIT = HEIGHT;
+    const float BALL_VELOCITY_Y_LIMIT = 0.8f * HEIGHT;
     const float FONT_SIZE = 0.1f * WIDTH;
 
     while(!WindowShouldClose()){
@@ -489,6 +489,7 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
             ball_position.x = WIDTH / 2.0f;
             ball_position.y = HEIGHT / 2.0f;
             ball_velocity.x = -0.59f * WIDTH;
+            paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             paddle_B_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             ball_velocity.y = 0.0f;
             paddle_A_points += 1;
