@@ -104,6 +104,7 @@ void multi_player_mode(float WIDTH, float HEIGHT) {
     };
     const float BALL_VELOCITY_Y_LIMIT = HEIGHT;
     const float FONT_SIZE = 0.1f * WIDTH;
+    float dt = GetFrameTime();
 
 
     while(!WindowShouldClose()){
@@ -188,10 +189,10 @@ void multi_player_mode(float WIDTH, float HEIGHT) {
             paddle_A_points += 1;
         }
 
-        ball_position.x += ball_velocity.x * GetFrameTime();
-        ball_position.y += ball_velocity.y * GetFrameTime();
-        paddle_A_y += paddle_A_velocity * GetFrameTime();
-        paddle_B_y += paddle_B_velocity * GetFrameTime();
+        ball_position.x += ball_velocity.x * dt;
+        ball_position.y += ball_velocity.y * dt;
+        paddle_A_y += paddle_A_velocity * dt;
+        paddle_B_y += paddle_B_velocity * dt;
 
         BeginDrawing();
         ClearBackground(BG_COLOR);
@@ -253,7 +254,6 @@ void multi_player_mode(float WIDTH, float HEIGHT) {
                 DrawText(TextFormat("PLAYER B WON!"), 0.11f * WIDTH, 0.434f * HEIGHT, FONT_SIZE, FG_COLOR);
             }
         }
-        
         EndDrawing();
     };
 }
@@ -276,12 +276,13 @@ void no_cpu_mode(float WIDTH, float HEIGHT) {
         (WIDTH - BALL_SIZE) / 2.0f,
         (HEIGHT - BALL_SIZE) / 2.0f
     };
+    const float BALL_VELOCITY_Y_LIMIT = 0.8f * HEIGHT;
     Vector2 ball_velocity = {
         (0.6f * WIDTH),
-        0.0f
+        (rand() % (int) BALL_VELOCITY_Y_LIMIT - BALL_VELOCITY_Y_LIMIT / 2)
     };
-    const float BALL_VELOCITY_Y_LIMIT = HEIGHT;
     const float FONT_SIZE = 0.1f * WIDTH;
+    float dt = GetFrameTime();
 
     while(!WindowShouldClose()){
         if(IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)){
@@ -301,7 +302,7 @@ void no_cpu_mode(float WIDTH, float HEIGHT) {
             paddle_A_velocity = 0.0f;
             paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             ball_velocity.x = 0.59f * WIDTH;
-            ball_velocity.y = 0.0f;
+            ball_velocity.y = (rand() % (int) BALL_VELOCITY_Y_LIMIT - BALL_VELOCITY_Y_LIMIT / 2);
             ball_position.x = (WIDTH - BALL_SIZE) / 2.0f;
             ball_position.y = (HEIGHT - BALL_SIZE) / 2.0f;
         }
@@ -331,7 +332,7 @@ void no_cpu_mode(float WIDTH, float HEIGHT) {
             ball_position.x = WIDTH / 2.0f;
             ball_position.y = HEIGHT / 2.0f;
             ball_velocity.x = 0.59f * WIDTH;
-            ball_velocity.y = 0.0f;
+            ball_velocity.y = (rand() % (int) BALL_VELOCITY_Y_LIMIT - BALL_VELOCITY_Y_LIMIT / 2);
             fail++;
         }
 
@@ -340,9 +341,9 @@ void no_cpu_mode(float WIDTH, float HEIGHT) {
             ball_position.x = WIDTH - BALL_SIZE;
         }
 
-        ball_position.x += ball_velocity.x * GetFrameTime();
-        ball_position.y += ball_velocity.y * GetFrameTime();
-        paddle_A_y += paddle_A_velocity * GetFrameTime();
+        ball_position.x += ball_velocity.x * dt;
+        ball_position.y += ball_velocity.y * dt;
+        paddle_A_y += paddle_A_velocity * dt;
 
         BeginDrawing();
         ClearBackground(BG_COLOR);
@@ -383,7 +384,6 @@ void no_cpu_mode(float WIDTH, float HEIGHT) {
             DrawRectangle(0.0f, 0.0f, WIDTH, HEIGHT, BG_COLOR);
             DrawText("GAME OVER!", 0.2f * WIDTH, 0.45f * HEIGHT, FONT_SIZE, FAIL_COLOR);
         }
-
         EndDrawing();
     };
     return;
@@ -412,12 +412,13 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
         (WIDTH - BALL_SIZE) / 2.0f,
         (HEIGHT - BALL_SIZE) / 2.0f
     };
+    const float BALL_VELOCITY_Y_LIMIT = 0.8f * HEIGHT;
     Vector2 ball_velocity = {
         (0.6f * WIDTH),
-        0.0f
+        (rand() % (int) BALL_VELOCITY_Y_LIMIT - BALL_VELOCITY_Y_LIMIT / 2)
     };
-    const float BALL_VELOCITY_Y_LIMIT = 0.8f * HEIGHT;
     const float FONT_SIZE = 0.1f * WIDTH;
+    float dt = GetFrameTime();
 
     while(!WindowShouldClose()){
         if(IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)){
@@ -481,7 +482,7 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
             paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             paddle_B_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             ball_velocity.x = 0.59f * WIDTH;
-            ball_velocity.y = 0.0f;
+            ball_velocity.y = (rand() % (int) BALL_VELOCITY_Y_LIMIT - BALL_VELOCITY_Y_LIMIT / 2);
             paddle_B_points += 1;
         }
 
@@ -491,14 +492,14 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
             ball_velocity.x = -0.59f * WIDTH;
             paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             paddle_B_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
-            ball_velocity.y = 0.0f;
+            ball_velocity.y = (rand() % (int) BALL_VELOCITY_Y_LIMIT - BALL_VELOCITY_Y_LIMIT / 2);
             paddle_A_points += 1;
         }
 
-        ball_position.x += ball_velocity.x * GetFrameTime();
-        ball_position.y += ball_velocity.y * GetFrameTime();
-        paddle_A_y += paddle_A_velocity * GetFrameTime();
-        paddle_B_y += paddle_B_velocity * GetFrameTime();
+        ball_position.x += ball_velocity.x * dt;
+        ball_position.y += ball_velocity.y * dt;
+        paddle_A_y += paddle_A_velocity * dt;
+        paddle_B_y += paddle_B_velocity * dt;
 
         BeginDrawing();
         ClearBackground(BG_COLOR);
@@ -574,7 +575,6 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
                 DrawText(TextFormat("PLAYER B WON!"), 0.14f * WIDTH, 0.434f * HEIGHT, FONT_SIZE, FG_COLOR);
             }
         }
-        
         EndDrawing();
     };
     return;
@@ -601,12 +601,13 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
         (WIDTH - BALL_SIZE) / 2.0f,
         (HEIGHT - BALL_SIZE) / 2.0f
     };
+    const float BALL_VELOCITY_Y_LIMIT = 0.8f * HEIGHT;
     Vector2 ball_velocity = {
         (0.6f * WIDTH),
-        0.0f
+        (rand() % (int) BALL_VELOCITY_Y_LIMIT - BALL_VELOCITY_Y_LIMIT / 2)
     };
-    const float BALL_VELOCITY_Y_LIMIT = HEIGHT;
     const float FONT_SIZE = 0.1f * WIDTH;
+    float dt = GetFrameTime();
 
     while(!WindowShouldClose()){
         if(IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)){
@@ -628,10 +629,12 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
             paddle_B_velocity = 0.0f;
             paddle_B_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             ball_velocity.x = 0.59f * WIDTH;
-            ball_velocity.y = 0.0f;
+            ball_velocity.y = (rand() % (int) BALL_VELOCITY_Y_LIMIT - BALL_VELOCITY_Y_LIMIT / 2);
             ball_position.x = (WIDTH - BALL_SIZE) / 2.0f;
             ball_position.y = (HEIGHT - BALL_SIZE) / 2.0f;
         }
+
+        paddle_B_y = ball_position.y - (PADDLE_HEIGHT - BALL_SIZE) / 2.0f;
 
         if(paddle_A_y > HEIGHT - PADDLE_HEIGHT){
             paddle_A_y = HEIGHT - PADDLE_HEIGHT;
@@ -658,11 +661,9 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
             ball_position.y = HEIGHT / 2.0f;
             paddle_A_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             ball_velocity.x = 0.59f * WIDTH;
-            ball_velocity.y = 0.0f;
+            ball_velocity.y = (rand() % (int) BALL_VELOCITY_Y_LIMIT - BALL_VELOCITY_Y_LIMIT / 2);
             paddle_B_points += 1;
         }
-
-        paddle_B_y = ball_position.y - (PADDLE_HEIGHT - BALL_SIZE) / 2.0f;
 
         if(paddle_A_y < 0.0f){
             paddle_A_y = 0.0f;
@@ -674,10 +675,10 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
             paddle_B_velocity = 0.0f;
         }
 
-        ball_position.x += ball_velocity.x * GetFrameTime();
-        ball_position.y += ball_velocity.y * GetFrameTime();
-        paddle_A_y += paddle_A_velocity * GetFrameTime();
-        paddle_B_y += paddle_B_velocity * GetFrameTime();
+        ball_position.x += ball_velocity.x * dt;
+        ball_position.y += ball_velocity.y * dt;
+        paddle_A_y += paddle_A_velocity * dt;
+        paddle_B_y += paddle_B_velocity * dt;
 
         BeginDrawing();
         ClearBackground(BG_COLOR);
@@ -734,9 +735,7 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
             DrawRectangle(0.0f, 0.0f, WIDTH, HEIGHT, BG_COLOR);
             DrawText("GAME OVER!", 0.2f * WIDTH, 0.45f * HEIGHT, FONT_SIZE, FG_COLOR);
         }
-
         EndDrawing();
-
     };
     return;
 }
