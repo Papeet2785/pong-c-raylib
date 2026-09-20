@@ -569,10 +569,10 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
             paddle_B_y = ((HEIGHT - PADDLE_HEIGHT) / 2.0f);
             DrawRectangle(0.0f, 0.0f, WIDTH, HEIGHT, BG_COLOR);
             if(paddle_A_points > paddle_B_points){
-                DrawText(TextFormat("PLAYER A WON!"), 0.14f * WIDTH, 0.434f * HEIGHT, FONT_SIZE, FG_COLOR);
+                DrawText(TextFormat("PLAYER A WON!"), 0.11f * WIDTH, 0.434f * HEIGHT, FONT_SIZE, FG_COLOR);
             }
             if(paddle_B_points > paddle_A_points){
-                DrawText(TextFormat("PLAYER B WON!"), 0.14f * WIDTH, 0.434f * HEIGHT, FONT_SIZE, FG_COLOR);
+                DrawText(TextFormat("PLAYER B WON!"), 0.11f * WIDTH, 0.434f * HEIGHT, FONT_SIZE, FG_COLOR);
             }
         }
         EndDrawing();
