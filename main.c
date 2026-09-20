@@ -441,7 +441,7 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
             paddle_B_velocity = 0.0f;
             paddle_B_y = (HEIGHT - PADDLE_HEIGHT) / 2.0f;
             ball_velocity.x = 0.59f * WIDTH;
-            ball_velocity.y = 0.0f;
+            ball_velocity.y = (rand() % (int) BALL_VELOCITY_Y_LIMIT - BALL_VELOCITY_Y_LIMIT / 2);
             ball_position.x = (WIDTH - BALL_SIZE) / 2.0f;
             ball_position.y = (HEIGHT - BALL_SIZE) / 2.0f;
         }
