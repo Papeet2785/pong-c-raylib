@@ -66,7 +66,7 @@ int main() {
             if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT)){
                 hard_cpu_mode(WIDTH, HEIGHT);
             }
-        } 
+        }
         DrawText("IMPOSSIBLE", 0.562f * WIDTH, 0.69f * HEIGHT, 0.9f * MENU_FONT_SIZE, BG_COLOR);
 
         EndDrawing();
@@ -206,19 +206,19 @@ void multi_player_mode(float WIDTH, float HEIGHT) {
             bounce = (rand() % (BOUNCE_MAX - BOUNCE_MIN + 1) + BOUNCE_MIN);
             if(paddle_A_velocity < 0){
                 ball_velocity.y -= bounce;
-            } 
+            }
             else if(paddle_A_velocity > 0){
                 ball_velocity.y += bounce;
             }
             ball_position.x = PADDLE_PADDING + PADDLE_WIDTH;
-        }  
+        }
 
         if(CheckCollisionRecs(ball, paddle_B) && ball_velocity.x > 0){
             ball_velocity.x *= -1;
             bounce = (rand() % (BOUNCE_MAX - BOUNCE_MIN + 1) + BOUNCE_MIN);
             if(paddle_B_velocity < 0){
                 ball_velocity.y -= bounce;
-            } 
+            }
             else if(paddle_B_velocity > 0){
                 ball_velocity.y += bounce;
             }
@@ -356,7 +356,7 @@ void no_cpu_mode(float WIDTH, float HEIGHT) {
             bounce = (rand() % (BOUNCE_MAX - BOUNCE_MIN + 1) + BOUNCE_MIN);
             if(paddle_A_velocity < 0){
                 ball_velocity.y -= bounce;
-            } 
+            }
             else if(paddle_A_velocity > 0){
                 ball_velocity.y += bounce;
             }
@@ -390,7 +390,7 @@ void no_cpu_mode(float WIDTH, float HEIGHT) {
 }
 
 void ez_cpu_mode(float WIDTH, float HEIGHT) {
-    
+
     const int WIN_LIMIT = 10;
     int paddle_A_points = 0;
     int paddle_B_points = 0;
@@ -412,7 +412,7 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
         (WIDTH - BALL_SIZE) / 2.0f,
         (HEIGHT - BALL_SIZE) / 2.0f
     };
-    const float BALL_VELOCITY_Y_LIMIT = 0.8f * HEIGHT;
+    const float BALL_VELOCITY_Y_LIMIT = HEIGHT;
     Vector2 ball_velocity = {
         (0.6f * WIDTH),
         (rand() % (int) BALL_VELOCITY_Y_LIMIT - BALL_VELOCITY_Y_LIMIT / 2)
@@ -513,19 +513,19 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
             bounce = (rand() % (BOUNCE_MAX - BOUNCE_MIN + 1) + BOUNCE_MIN);
             if(paddle_A_velocity < 0){
                 ball_velocity.y -= bounce;
-            } 
+            }
             else if(paddle_A_velocity > 0){
                 ball_velocity.y += bounce;
             }
             ball_position.x = PADDLE_PADDING + PADDLE_WIDTH;
-        }  
+        }
 
         if(CheckCollisionRecs(ball, paddle_B) && ball_velocity.x > 0){
             ball_velocity.x *= -1;
             bounce = (rand() % (BOUNCE_MAX - BOUNCE_MIN + 1) + BOUNCE_MIN);
             if(paddle_B_velocity < 0){
                 ball_velocity.y -= bounce;
-            } 
+            }
             else if(paddle_B_velocity > 0){
                 ball_velocity.y += bounce;
             }
@@ -581,7 +581,7 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
 }
 
 void hard_cpu_mode(float WIDTH, float HEIGHT) {
-    
+
     const int WIN_LIMIT = 10;
     int paddle_B_points = 0;
     const float PADDLE_WIDTH = 0.02f * HEIGHT;
@@ -692,19 +692,19 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
             bounce = (rand() % (BOUNCE_MAX - BOUNCE_MIN + 1) + BOUNCE_MIN);
             if(paddle_A_velocity < 0){
                 ball_velocity.y -= bounce;
-            } 
+            }
             else if(paddle_A_velocity > 0){
                 ball_velocity.y += bounce;
             }
             ball_position.x = PADDLE_PADDING + PADDLE_WIDTH;
-        }  
+        }
 
         if(CheckCollisionRecs(ball, paddle_B) && ball_velocity.x > 0){
             ball_velocity.x *= -1;
             bounce = (rand() % (BOUNCE_MAX - BOUNCE_MIN + 1) + BOUNCE_MIN);
             if(paddle_B_velocity < 0){
                 ball_velocity.y -= bounce;
-            } 
+            }
             else if(paddle_B_velocity > 0){
                 ball_velocity.y += bounce;
             }
