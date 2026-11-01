@@ -2,14 +2,20 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -std=c99 -O1 -I include
 
-LDFLAGS = -L lib -lraylib -lopengl32 -lgdi32 -lwinmm
+LIBGL_DIR = $(shell nix eval --raw nixpkgs#libGL.outPath)/lib
+LIBX11_DIR = $(shell nix eval --raw nixpkgs#xorg.libX11.outPath)/lib
 
-TARGET = pong.exe
+LDFLAGS = -L lib -L$(LIBGL_DIR) -L$(LIBX11_DIR)
 
+LDLIBS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+
+TARGET = pong
 SRC = main.c
 
 $(TARGET): $(SRC)
-	$(CC) $(CFLAGS) $(SRC) -o $(TARGET) $(LDFLAGS)
+	$(CC) $(CFLAGS) $(SRC) -o $(TARGET) $(LDFLAGS) $(LDLIBS)
 
 clean:
-	del /Q $(TARGET) 2>NUL
+	rm -f $(TARGET)
+
+.PHONY: clean
