@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c99 -O1 -I include
 
 LIBGL_DIR = $(shell nix eval --raw nixpkgs#libGL.outPath)/lib
-LIBX11_DIR = $(shell nix eval --raw nixpkgs#xorg.libX11.outPath)/lib
+LIBX11_DIR = $(shell nix eval --raw nixpkgs#libx11.outPath)/lib
 
 LDFLAGS = -L lib -L$(LIBGL_DIR) -L$(LIBX11_DIR)
 

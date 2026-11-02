@@ -93,6 +93,7 @@ void multi_player_mode(float WIDTH, float HEIGHT) {
     float paddle_B_velocity = 0.0f;
     const float PADDLE_PADDING = 0.005f * WIDTH;
     const float HALFLINE_WIDTH = 0.005f * WIDTH;
+    const int HALFLINE_SEG_LENGTH = 20;
     const float BALL_SIZE = 0.02f * WIDTH;
     Vector2 ball_position = {
         (WIDTH - BALL_SIZE) / 2.0f,
@@ -235,7 +236,9 @@ void multi_player_mode(float WIDTH, float HEIGHT) {
         DrawRectangleRec(paddle_A, FG_COLOR);
         DrawRectangleRec(paddle_B, FG_COLOR);
         DrawRectangleRec(ball, FG_COLOR);
-        DrawRectangle((WIDTH / 2) - (HALFLINE_WIDTH / 2), 0.0f, HALFLINE_WIDTH, HEIGHT, FG_COLOR);
+        for (int y = 0; y < HEIGHT; y += (HALFLINE_SEG_LENGTH + HALFLINE_SEG_LENGTH)) {
+            DrawRectangle((WIDTH / 2) - (HALFLINE_WIDTH / 2), y, HALFLINE_WIDTH, HALFLINE_SEG_LENGTH, FG_COLOR );
+        }
         DrawText(TextFormat("%d", paddle_A_points), 0.29f * WIDTH, 0.02f * HEIGHT, FONT_SIZE, FG_COLOR);
         DrawText(TextFormat("%d", paddle_B_points), 0.67f * WIDTH, 0.02f * HEIGHT, FONT_SIZE, FG_COLOR);
 
@@ -407,6 +410,7 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
     float paddle_B_velocity = 0.0f;
     const float PADDLE_PADDING = 0.005f * WIDTH;
     const float HALFLINE_WIDTH = 0.005f * WIDTH;
+    const int HALFLINE_SEG_LENGTH = 20;
     const float BALL_SIZE = 0.02f * WIDTH;
     Vector2 ball_position = {
         (WIDTH - BALL_SIZE) / 2.0f,
@@ -556,7 +560,9 @@ void ez_cpu_mode(float WIDTH, float HEIGHT) {
         DrawRectangleRec(paddle_A, FG_COLOR);
         DrawRectangleRec(paddle_B, FG_COLOR);
         DrawRectangleRec(ball, FG_COLOR);
-        DrawRectangle((WIDTH / 2) - (HALFLINE_WIDTH / 2), 0.0f, HALFLINE_WIDTH, HEIGHT, FG_COLOR);
+        for (int y = 0; y < HEIGHT; y += (HALFLINE_SEG_LENGTH + HALFLINE_SEG_LENGTH)) {
+            DrawRectangle((WIDTH / 2) - (HALFLINE_WIDTH / 2), y, HALFLINE_WIDTH, HALFLINE_SEG_LENGTH, FG_COLOR );
+        }
         DrawText(TextFormat("%d", paddle_A_points), 0.29f * WIDTH, 0.02f * HEIGHT, FONT_SIZE, FG_COLOR);
         DrawText(TextFormat("%d", paddle_B_points), 0.67f * WIDTH, 0.02f * HEIGHT, FONT_SIZE, FG_COLOR);
 
@@ -596,6 +602,7 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
     float paddle_B_velocity = 0.0f;
     const float PADDLE_PADDING = 0.005f * WIDTH;
     const float HALFLINE_WIDTH = 0.005f * WIDTH;
+    const int HALFLINE_SEG_LENGTH = 20;
     const float BALL_SIZE = 0.02f * WIDTH;
     Vector2 ball_position = {
         (WIDTH - BALL_SIZE) / 2.0f,
@@ -721,7 +728,9 @@ void hard_cpu_mode(float WIDTH, float HEIGHT) {
         DrawRectangleRec(paddle_A, FG_COLOR);
         DrawRectangleRec(paddle_B, FG_COLOR);
         DrawRectangleRec(ball, FG_COLOR);
-        DrawRectangle((WIDTH / 2) - (HALFLINE_WIDTH / 2), 0.0f, HALFLINE_WIDTH, HEIGHT, FG_COLOR);
+        for (int y = 0; y < HEIGHT; y += (HALFLINE_SEG_LENGTH + HALFLINE_SEG_LENGTH)) {
+            DrawRectangle((WIDTH / 2) - (HALFLINE_WIDTH / 2), y, HALFLINE_WIDTH, HALFLINE_SEG_LENGTH, FG_COLOR );
+        }
         DrawText("0", 0.29f * WIDTH, 0.02f * HEIGHT, FONT_SIZE, FG_COLOR);
         DrawText(TextFormat("%d", paddle_B_points), 0.67f * WIDTH, 0.02f * HEIGHT, FONT_SIZE, FG_COLOR);
 
